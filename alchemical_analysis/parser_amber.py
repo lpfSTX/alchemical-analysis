@@ -482,7 +482,6 @@ def readDataAmber(P):
                         # NOTE: should be ok for pymbar because exp(-u)
                         if E > 0.0:
                             high_E_cnt += 1
-
                         file_datum.mbar_energies[lmbda].append(E - E_ref)
 
                 if 'DV/DL, AVERAGES OVER' in line:
@@ -664,7 +663,9 @@ def readDataAmber(P):
 
         if have_mbar:
             for j, ene in enumerate(mbar_all[clambda]):
-                enes = ene[start_from:]
+                # Edited by Pengfei Li
+                #enes = ene[start_from:]
+                enes = ene[start_from:end_position]
                 l_enes = len(enes)
                 u_klt[i][j][:l_enes] = enes
 
@@ -733,4 +734,6 @@ def readDataAmber(P):
             gfile.write('\n')
 
 
-    return (np.array(nsnapshots), np.array(lvals).reshape(K, 1), dhdlt, u_klt)
+    #Edited by Pengfei Li
+    #return (np.array(nsnapshots), np.array(lvals).reshape(K, 1), dhdlt, u_klt)
+    return (np.array(nsnapshots), np.array(lvals).reshape(K, 1), dhdlt*4.184, u_klt*4.184)
