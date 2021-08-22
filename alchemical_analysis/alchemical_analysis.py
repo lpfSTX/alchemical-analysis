@@ -179,7 +179,7 @@ def uncorrelate(sta, fin, do_dhdl=False):
       # Uncorrelate based on dhdl values at a given lambda.
 
       for k in range(K):
-         # Sum up over those energy components that are changing.  
+         # Sum up over those energy components that are changing.
          # if there are repeats, we need to use the lchange[k] from the last repeated state.
          lastl = k
          for l in range(K):
@@ -333,7 +333,8 @@ def estimatewithMBAR(u_kln, N_k, reltol, regular_estimate=False):
    if regular_estimate:
       if P.overlap:
          print "The overlap matrix is..."
-         O = MBAR.computeOverlap()[2]
+         result = MBAR.computeOverlap()
+         O = result['matrix']
          for k in range(K):
             line = ''
             for l in range(K):
@@ -565,7 +566,7 @@ def estimatePairs():
          if name == 'MBAR':
             #===================================================================================================
             # Store the MBAR free energy difference (already estimated above) properly, i.e. by state.
-            #===================================================================================================        
+            #===================================================================================================
             (df['MBAR'], ddf['MBAR']) =  Deltaf_ij[k,k+1], numpy.nan_to_num(dDeltaf_ij[k,k+1])
 
       df_allk = numpy.append(df_allk,df)
@@ -609,7 +610,7 @@ def totalEnergies():
    elif startcoul==endcoul:
       #There is no coulomb section
       if P.verbose: print "No Coulomb transformation present."
-      pass    
+      pass
    else:
       startcoul = 0
       startvdw = endcoul
@@ -647,7 +648,7 @@ def totalEnergies():
                      h = numpy.trim_zeros(dlam[:,j])
                      wsum = 0.5*(numpy.append(h,0) + numpy.append(0,h))
                      ddF[name] += numpy.dot(wsum**2,std_dhdl[lj,j]**2)
- 
+
             ddF[name] = numpy.sqrt(ddF[name])
 
          # Use the total energy value and uncertainty that pymbar offers.
@@ -1332,7 +1333,7 @@ def main():
    lchange = get_lchange(lv)
 
    #NML: Check for all zeros in data files
-   #sliu: change the all zero check to let the calculation continue if there is only dhdlt. 
+   #sliu: change the all zero check to let the calculation continue if there is only dhdlt.
    all_zeros = not numpy.any(dhdlt) and not numpy.any(u_klt)
 
    if all_zeros == True:
